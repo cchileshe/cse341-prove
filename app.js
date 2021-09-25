@@ -29,7 +29,11 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 mongoConnect(() => {
-    app.listen(process.env.PORT || 5000);
-  });
-
-
+    app.listen(process.env.PORT || 5000, () => {
+        console.log(`Server listening on ${PORT}`);
+      });
+    //app.listen(process.env.PORT || 5000);
+    
+        //console.log(`Server listening on ${PORT}`);
+      
+  //});
