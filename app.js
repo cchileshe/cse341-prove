@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const errorController = require('./controllers/error');
 
 const app = express();
-
+const mongoConnect = require('./util/database').mongoConnect;
 
 const cors = require('cors') // Place this with other requires (like 'path' and 'express')
 
@@ -28,28 +28,8 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 app.use(errorController.get404);
-
-app.listen(5000);
-
-
-app.use(cors(corsOptions));
-
-const options = {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-    family: 4
-};
-
-const MONGODB_URL = process.env.MONGODB_URL || "mongodb+srv://admin:<password>@cse341.sm7ru.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-mongoose.connect(
-    MONGODB_URL, options
-  )
-  .then(result => {
-    // This should be your user handling code implement following the course videos
-    app.listen(PORT);
-  })
-  .catch(err => {
-    console.log(err);
+mongoConnect(() => {
+    app.listen(3000);
   });
+
+
