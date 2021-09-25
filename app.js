@@ -6,7 +6,23 @@ const bodyParser = require('body-parser');
 const errorController = require('./controllers/error');
 
 const app = express();
-const mongoConnect = require('./util/database').mongoConnect;
+//const mongoConnect = require('./util/database').mongoConnect;
+
+const MONGODB_URL = process.env.MONGODB_URL || 'mongodb+srv://admin:admin@cse341.sm7ru.mongodb.net/cse341?retryWrites=true&w=majority';
+
+
+// Added by Lau
+const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
+
+const PORT = process.env.PORT || 5000;
+const store = new MongoDBStore({
+    uri: MONGODB_URL,
+    collection: 'sessions'
+  });
+
+// End of lau's input
 
 const cors = require('cors') // Place this with other requires (like 'path' and 'express')
 
@@ -29,13 +45,22 @@ app.use(shopRoutes);
 
 
 app.use(errorController.get404);
+
+mongoose
+  .connect(
+    MONGODB_URL, options
+  )
+  .catch(err => {
+    console.log(err);
+  });
+
+
+/*
 mongoConnect(() => {
-    let PORT = process.env.PORT || 5000;
+  
     app.listen(PORT,() => {
         console.log(`Server listening on ${PORT}`);
       });
     })
-    //app.listen(process.env.PORT || 5000);
-    
-        //console.log(`Server listening on ${PORT}`);
-      
+   
+*/
