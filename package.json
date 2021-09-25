@@ -1,5 +1,5 @@
 {
-  "name": "section02",
+  "name": "cse341-prove",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -12,11 +12,11 @@
   "dependencies": {
     "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "expresss": "0.0.0",
     "nodemon": "^2.0.12"
   },
   "repository": {
     "type": "git",
     "url": "https://https://cse341-proves.herokuapp.com/"
   }
-  
 }
